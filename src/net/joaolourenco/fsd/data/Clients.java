@@ -136,4 +136,35 @@ public class Clients {
 		return (clients.length + 5);
 	}
 
+	/**
+	 * This is used to remove a Client.
+	 * 
+	 * @author João Lourenço
+	 * @category Clients
+	 */
+	public static void removeClient(int ID) {
+		// Printing the information.
+		ServerLogger.println("Removing client " + clients[ID].getName() + "/" + clients[ID].getAddress() + ".");
+		// Closing the Streams.
+		clients[ID].close();
+		// Stopping the Client Thread.
+		clients[ID].stopClient();
+		// Removing the client from the connected clients list.
+		clients[ID] = null;
+		// Removing one from the clientsCount because we have less one client.
+		clientCount--;
+	}
+
+	/**
+	 * This is used to check for a login.
+	 * 
+	 * @author João Lourenço
+	 * @category Clients
+	 * @return Boolean, true if account is valid, false if not.
+	 */
+	public static boolean checkLogin(String _name, String _pw) {
+		// In the future there will be some kind of login check.
+		return true;
+	}
+
 }
