@@ -22,13 +22,35 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import net.joaolourenco.fsd.data.Clients;
+import net.joaolourenco.fsd.data.MetarManager;
 import net.joaolourenco.fsd.data.ServerLogger;
 import net.joaolourenco.fsd.data.ServerValues;
 
 public class Server implements Runnable {
 
+	/**
+	 * This is the main socket.
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
 	private ServerSocket server = null;
+
+	/**
+	 * This is the main thread.
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
 	private Thread thread = null;
+
+	/**
+	 * This is the Metar Manager.
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
+	private MetarManager mm;
 
 	/**
 	 * This is where the main socket is created
@@ -50,6 +72,9 @@ public class Server implements Runnable {
 		}
 		// We are now creating a array of clients with the size from the config file
 		Clients.setupClients(ServerValues.Max_Clients.getPropertie());
+		// We are now setting up the MetarManager
+		ServerLogger.println("Starting the Metar Manager");
+		mm = new MetarManager();
 	}
 
 	/**
