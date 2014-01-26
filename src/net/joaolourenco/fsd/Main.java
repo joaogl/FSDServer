@@ -42,7 +42,7 @@ public class Main {
 		FileManager.getConfigs();
 
 		// Creating the Sockets to communicate.
-		Server server = new Server(ServerValues.Server_Port.getPropertie());
+		Server server = new Server(ServerValues.Client_Port.getPropertie());
 		// Starting the main server thread.
 		server.start();
 	}
