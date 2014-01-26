@@ -1,5 +1,9 @@
 package net.joaolourenco.fsd.data;
 
+import java.io.IOException;
+import java.net.Socket;
+
+import net.joaolourenco.fsd.Server;
 import net.joaolourenco.fsd.ServerClient;
 
 public class Clients {
@@ -11,6 +15,7 @@ public class Clients {
 	 * @category Variables
 	 */
 	private static ServerClient clients[];
+	private static int clientsRev[];
 
 	/**
 	 * This is a variable to keep track of how many clients are on.
@@ -29,8 +34,10 @@ public class Clients {
 	 * @category Clients
 	 */
 	public static void setupClients(int max) {
-		// We are now creating a array of clients with the size from the config file
+		// We are now creating a array of clients with the size from the config file.
 		clients = new ServerClient[max];
+		// We are now creating a array of clients with the size from the config file to hold the holding clients.
+		clientsRev = new int[max];
 	}
 
 	/**
@@ -45,6 +52,17 @@ public class Clients {
 	}
 
 	/**
+	 * This is used to get the maximum of online clients.
+	 * 
+	 * @author João Lourenço
+	 * @category Clients
+	 * @return The maximum of clients as an Integer
+	 */
+	public static int getMaxClients() {
+		return clients.length;
+	}
+
+	/**
 	 * This is used to check if there are free slots on the server.
 	 * 
 	 * @author João Lourenço
@@ -53,6 +71,69 @@ public class Clients {
 	 */
 	public static boolean availableSlots() {
 		return (clientCount < clients.length);
+	}
+
+	/**
+	 * This is used to add a new client to the list.
+	 * 
+	 * @author João Lourenço
+	 * @category Clients
+	 * @return 0 if was successful and 1 if it wasn't.
+	 */
+	public static int addClient(Socket _socket, Server _server) {
+		// We need to get a free ID.
+		int ID = getFreeID();
+		// We are checking if its an error ID or not.
+		if (ID != getErrorCode()) {
+			try {
+				// We are adding the new client, Openning the Streams and starting the threads.
+				clients[ID] = new ServerClient(_server, _socket, "FuturePassword", "FutureCertID", ID);
+				clients[ID].open();
+				clients[ID].start();
+				// Then because everything is done we can add one more client and remove the reserve.
+				clientCount++;
+				clientsRev[ID] = 0;
+				// Returning 0 because there where no errors.
+				return 0;
+			} catch (IOException e) {
+				// If something gone wrong, we are returning 1 and printing the error.
+				e.printStackTrace();
+				return 1;
+			}
+		}
+		// If something gone wrong, we are returning 1.
+		return 1;
+	}
+
+	/**
+	 * This is used to find an empty ID.
+	 * 
+	 * @author João Lourenço
+	 * @category Clients
+	 * @return An int corresponding to the empty slot.
+	 */
+	public static int getFreeID() {
+		// Here we are running through all the indexes of the clients to check which is the first empty slot.
+		for (int i = 0; i < clients.length; i++) {
+			if (clients[i] == null && clientsRev[i] == 0) {
+				// When we find the empty slot we reserve it and return its ID.
+				clientsRev[i] = i;
+				return i;
+			}
+		}
+		// If no ID is found we return the error code.
+		return getErrorCode();
+	}
+
+	/**
+	 * This is used to get the Error code.
+	 * 
+	 * @author João Lourenço
+	 * @category Clients
+	 * @return An int corresponding to error code.
+	 */
+	public static int getErrorCode() {
+		return (clients.length + 5);
 	}
 
 }
