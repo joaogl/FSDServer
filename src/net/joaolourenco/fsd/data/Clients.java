@@ -1,6 +1,5 @@
 package net.joaolourenco.fsd.data;
 
-import java.io.IOException;
 import java.net.Socket;
 
 import net.joaolourenco.fsd.Server;
@@ -85,21 +84,15 @@ public class Clients {
 		int ID = getFreeID();
 		// We are checking if its an error ID or not.
 		if (ID != getErrorCode()) {
-			try {
-				// We are adding the new client, Openning the Streams and starting the threads.
-				clients[ID] = new ServerClient(_server, _socket, "FuturePassword", "FutureCertID", ID);
-				clients[ID].open();
-				clients[ID].start();
-				// Then because everything is done we can add one more client and remove the reserve.
-				clientCount++;
-				clientsRev[ID] = 0;
-				// Returning 0 because there where no errors.
-				return 0;
-			} catch (IOException e) {
-				// If something gone wrong, we are returning 1 and printing the error.
-				e.printStackTrace();
-				return 1;
-			}
+			// We are adding the new client, Openning the Streams and starting the threads.
+			clients[ID] = new ServerClient(_socket, "FuturePassword", "FutureCertID", ID);
+			clients[ID].open();
+			clients[ID].start();
+			// Then because everything is done we can add one more client and remove the reserve.
+			clientCount++;
+			clientsRev[ID] = 0;
+			// Returning 0 because there where no errors.
+			return 0;
 		}
 		// If something gone wrong, we are returning 1.
 		return 1;
@@ -148,7 +141,7 @@ public class Clients {
 		// Closing the Streams.
 		clients[ID].close();
 		// Stopping the Client Thread.
-		clients[ID].stopClient();
+		clients[ID].stop();
 		// Removing the client from the connected clients list.
 		clients[ID] = null;
 		// Removing one from the clientsCount because we have less one client.
