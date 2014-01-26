@@ -32,7 +32,8 @@ public class Server implements Runnable {
 	private ServerClient clients[];
 	private Thread thread = null;
 	private static int clientCount = 0;
-	private IncommingHandler inhandler = new IncommingHandler();
+
+	//private IncommingHandler inhandler = new IncommingHandler();
 
 	/**
 	 * This is where the main socket is created
