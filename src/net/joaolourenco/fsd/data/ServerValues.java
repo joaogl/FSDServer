@@ -47,12 +47,68 @@ public class ServerValues {
 	public static IntPropertie Max_Clients = new IntPropertie(50, false);
 
 	/**
+	 * The client port
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
+	public static IntPropertie Client_Port = new IntPropertie(6809, false);
+
+	/**
 	 * The server port
 	 * 
 	 * @author João Lourenço
 	 * @category Variables
 	 */
-	public static IntPropertie Server_Port = new IntPropertie(6809, false);
+	public static IntPropertie Server_Port = new IntPropertie(3011, false);
+
+	/**
+	 * The system port
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
+	public static IntPropertie System_Port = new IntPropertie(3010, false);
+
+	/**
+	 * Server Ident
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
+	public static StringPropertie IDENT = new StringPropertie("WTG", false);
+
+	/**
+	 * Server owners email
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
+	public static StringPropertie EMAIL = new StringPropertie("joaoguerralourenco.pt@gmail.com", false);
+
+	/**
+	 * Server joinning password
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
+	public static StringPropertie Password = new StringPropertie("disable", false);
+
+	/**
+	 * Server Location
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
+	public static StringPropertie Location = new StringPropertie("Lisbon, Portugal", false);
+
+	/**
+	 * Server Mode
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
+	public static StringPropertie Server_Mode = new StringPropertie("normal", false);
 
 	/**
 	 * Server Config Path
