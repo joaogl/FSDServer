@@ -47,7 +47,7 @@ public class ServerLogger {
 	 */
 	public static void logger(Object message) {
 		try {
-			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(ServerValues.PATH_LOG.getPath(), true)));
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(ServerValues.PATH_LOG.getPropertie(), true)));
 			out.println(message);
 			out.close();
 		} catch (IOException e) {
